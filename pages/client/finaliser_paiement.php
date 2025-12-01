@@ -19,15 +19,15 @@ $stmt = $pdo->prepare("
         t.prix_base, t.ville_depart, t.ville_arrivee,
         s.numero_siege,
         b.immatriculation, a.nom_agence
-    FROM Paiement p
-    JOIN Reservation r ON p.id_reservation = r.id_reservation
-    JOIN Client c ON r.id_client = c.id_client
-    JOIN Voyage v ON r.id_voyage = v.id_voyage
-    JOIN Trajet t ON v.id_trajet = t.id_trajet
-    JOIN Billet bi ON r.id_reservation = bi.id_reservation
-    JOIN Siege s ON bi.id_siege = s.id_siege
-    JOIN Bus b ON v.id_bus = b.id_bus
-    JOIN Agence a ON v.id_agence = a.id_agence
+    FROM paiement p
+    JOIN reservation r ON p.id_reservation = r.id_reservation
+    JOIN client c ON r.id_client = c.id_client
+    JOIN voyage v ON r.id_voyage = v.id_voyage
+    JOIN trajet t ON v.id_trajet = t.id_trajet
+    JOIN billet bi ON r.id_reservation = bi.id_reservation
+    JOIN siege s ON bi.id_siege = s.id_siege
+    JOIN bus b ON v.id_bus = b.id_bus
+    JOIN agence a ON v.id_agence = a.id_agence
     WHERE p.token = ? AND p.statut = 'en_attente' AND p.expire_le > NOW()
 ");
 $stmt->execute([$token]);

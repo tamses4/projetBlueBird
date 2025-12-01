@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreur = "Cet email est déjà utilisé.";
     } else {
         // ADAPTÉ À TA BASE : nom_client au lieu de nom_complet
-        $stmt = $pdo->prepare("INSERT INTO Client (nom_client, telephone, email, mot_de_passe) VALUES (?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO client (nom_client, telephone, email, mot_de_passe) VALUES (?, ?, ?, ?)");
         if ($stmt->execute([$nom, $tel, $email, $password])) {
             $success = "Compte créé avec succès ! Vous pouvez vous connecter.";
         } else {

@@ -19,10 +19,10 @@ updateVoyageStatus($pdo, $id_voyage);
 $stmt = $pdo->prepare("
     SELECT v.*, t.ville_depart, t.ville_arrivee, t.prix_base, 
            b.immatriculation, b.nombre_place, a.nom_agence
-    FROM Voyage v
-    JOIN Trajet t ON v.id_trajet = t.id_trajet
-    JOIN Bus b ON v.id_bus = b.id_bus
-    JOIN Agence a ON v.id_agence = a.id_agence
+    FROM voyage v
+    JOIN trajet t ON v.id_trajet = t.id_trajet
+    JOIN bus b ON v.id_bus = b.id_bus
+    JOIN agence a ON v.id_agence = a.id_agence
     WHERE v.id_voyage = ? AND v.statut_voyage = 'Disponible'
 ");
 $stmt->execute([$id_voyage]);
@@ -35,8 +35,8 @@ if (!$voyage) {
 // CORRECTION ICI : Compter proprement les places réservées
 $stmt = $pdo->prepare("
     SELECT COUNT(*) 
-    FROM Billet bi
-    JOIN Reservation r ON bi.id_reservation = r.id_reservation
+    FROM billet bi
+    JOIN reservation r ON bi.id_reservation = r.id_reservation
     WHERE r.id_voyage = ? AND r.statut_reservation != 'annulée'
 ");
 $stmt->execute([$id_voyage]);
@@ -52,9 +52,9 @@ if ($places_libres <= 0) {
 $stmt = $pdo->prepare("
     SELECT s.id_siege, s.numero_siege,
            CASE WHEN bi.id_billet IS NOT NULL THEN 1 ELSE 0 END as reserve
-    FROM Siege s
-    LEFT JOIN Billet bi ON s.id_siege = bi.id_siege
-    LEFT JOIN Reservation r ON bi.id_reservation = r.id_reservation 
+    FROM siege s
+    LEFT JOIN billet bi ON s.id_siege = bi.id_siege
+    LEFT JOIN reservation r ON bi.id_reservation = r.id_reservation 
            AND r.id_voyage = ? AND r.statut_reservation != 'annulée'
     WHERE s.id_bus = ?
     ORDER BY s.numero_siege

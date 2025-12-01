@@ -17,7 +17,7 @@ $stmt = $pdo->prepare("
         v.date_depart,
         s.numero_siege
     FROM Paiement p
-    JOIN Reservation r ON p.id_reservation = r.id_reservation
+    JOIN reservation r ON p.id_reservation = r.id_reservation
     JOIN Client c ON r.id_client = c.id_client
     JOIN Voyage v ON r.id_voyage = v.id_voyage
     JOIN Trajet t ON v.id_trajet = t.id_trajet

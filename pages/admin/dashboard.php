@@ -27,13 +27,13 @@ $stmt = $pdo->query("
         v.date_depart,
         s.numero_siege,
         COALESCE(p.statut, 'en_attente') AS statut_paiement
-    FROM Reservation r
-    JOIN Client c ON r.id_client = c.id_client
-    JOIN Voyage v ON r.id_voyage = v.id_voyage
-    JOIN Trajet t ON v.id_trajet = t.id_trajet
-    JOIN Billet b ON r.id_reservation = b.id_reservation
-    JOIN Siege s ON b.id_siege = s.id_siege
-    LEFT JOIN Paiement p ON r.id_reservation = p.id_reservation
+    FROM reservation r
+    JOIN client c ON r.id_client = c.id_client
+    JOIN voyage v ON r.id_voyage = v.id_voyage
+    JOIN trajet t ON v.id_trajet = t.id_trajet
+    JOIN billet b ON r.id_reservation = b.id_reservation
+    JOIN siege s ON b.id_siege = s.id_siege
+    LEFT JOIN paiement p ON r.id_reservation = p.id_reservation
     ORDER BY r.date_reservation DESC
 ");
 $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -42,12 +42,12 @@ $stats = $pdo->query("
         COUNT(*) as total_reservations,
         SUM(bi.montant) as ca_total,
         AVG(bi.montant) as prix_moyen
-    FROM Reservation r
-    JOIN Billet bi ON r.id_reservation = bi.id_reservation
+    FROM reservation r
+    JOIN billet bi ON r.id_reservation = bi.id_reservation
 ")->fetch();
 
-$voyages_complets = $pdo->query("SELECT COUNT(*) FROM Voyage WHERE statut_voyage = 'Complet'")->fetchColumn();
-$voyages_en_cours = $pdo->query("SELECT COUNT(*) FROM Voyage WHERE statut_voyage = 'En cours'")->fetchColumn();
+$voyages_complets = $pdo->query("SELECT COUNT(*) FROM voyage WHERE statut_voyage = 'Complet'")->fetchColumn();
+$voyages_en_cours = $pdo->query("SELECT COUNT(*) FROM voyage WHERE statut_voyage = 'En cours'")->fetchColumn();
 ?>
 
 <h2>Tableau de bord Admin</h2>

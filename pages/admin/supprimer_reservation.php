@@ -19,18 +19,18 @@ try {
     $pdo->beginTransaction();
 
     // 1. Récupérer le siège à libérer
-    $stmt = $pdo->prepare("SELECT id_siege FROM Billet WHERE id_reservation = ?");
+    $stmt = $pdo->prepare("SELECT id_siege FROM billet WHERE id_reservation = ?");
     $stmt->execute([$id_reservation]);
     $id_siege = $stmt->fetchColumn();
 
     // 2. Supprimer TOUT dans le bon ordre (enfant → parent)
-    $pdo->prepare("DELETE FROM Paiement WHERE id_reservation = ?")->execute([$id_reservation]);
-    $pdo->prepare("DELETE FROM Billet WHERE id_reservation = ?")->execute([$id_reservation]);
-    $pdo->prepare("DELETE FROM Reservation WHERE id_reservation = ?")->execute([$id_reservation]);
+    $pdo->prepare("DELETE FROM paiement WHERE id_reservation = ?")->execute([$id_reservation]);
+    $pdo->prepare("DELETE FROM billet WHERE id_reservation = ?")->execute([$id_reservation]);
+    $pdo->prepare("DELETE FROM reservation WHERE id_reservation = ?")->execute([$id_reservation]);
 
     // 3. Libérer le siège (seulement si on l'a bien récupéré)
     if ($id_siege) {
-        $pdo->prepare("UPDATE Siege SET statut = 'disponible' WHERE id_siege = ?")->execute([$id_siege]);
+        $pdo->prepare("UPDATE siege SET statut = 'disponible' WHERE id_siege = ?")->execute([$id_siege]);
     }
 
     $pdo->commit();

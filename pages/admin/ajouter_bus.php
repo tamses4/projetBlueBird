@@ -14,12 +14,12 @@ if ($_POST) {
         $message = "<div style='color:red;'>Nombre de places entre 10 et 60.</div>";
     } else {
         try {
-            $stmt = $pdo->prepare("INSERT INTO Bus (immatriculation, marque, nombre_place) VALUES (?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO bus (immatriculation, marque, nombre_place) VALUES (?, ?, ?)");
             $stmt->execute([$immatriculation, $marque, $nombre_place]);
 
             // Créer les sièges
             $id_bus = $pdo->lastInsertId();
-            $stmt = $pdo->prepare("INSERT INTO Siege (id_bus, numero_siege, statut) VALUES (?, ?, 'libre')");
+            $stmt = $pdo->prepare("INSERT INTO siege (id_bus, numero_siege, statut) VALUES (?, ?, 'libre')");
             for ($i = 1; $i <= $nombre_place; $i++) {
                 $stmt->execute([$id_bus, $i]);
             }

@@ -10,14 +10,14 @@ $sql = "
     SELECT v.*, t.ville_depart, t.ville_arrivee, t.prix_base, 
            b.immatriculation, b.nombre_place, a.nom_agence,
            (b.nombre_place - COALESCE(reservees.reservees, 0)) as places_libres
-    FROM Voyage v
-    JOIN Trajet t ON v.id_trajet = t.id_trajet
-    JOIN Bus b ON v.id_bus = b.id_bus
-    JOIN Agence a ON v.id_agence = a.id_agence
+    FROM voyage v
+    JOIN trajet t ON v.id_trajet = t.id_trajet
+    JOIN bus b ON v.id_bus = b.id_bus
+    JOIN agence a ON v.id_agence = a.id_agence
     LEFT JOIN (
         SELECT r.id_voyage, COUNT(*) as reservees 
-        FROM Reservation r 
-        JOIN Billet bi ON r.id_reservation = bi.id_reservation 
+        FROM reservation r 
+        JOIN billet bi ON r.id_reservation = bi.id_reservation 
         WHERE r.statut_reservation != 'annulée'
         GROUP BY r.id_voyage
     ) reservees ON v.id_voyage = reservees.id_voyage

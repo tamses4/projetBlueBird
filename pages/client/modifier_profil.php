@@ -11,7 +11,7 @@ $client_id = $_SESSION['client_id'];
 $success = $error = "";
 
 // Récupérer les infos actuelles
-$stmt = $pdo->prepare("SELECT nom_client, telephone, email FROM Client WHERE id_client = ?");
+$stmt = $pdo->prepare("SELECT nom_client, telephone, email FROM client WHERE id_client = ?");
 $stmt->execute([$client_id]);
 $client = $stmt->fetch(PDO::FETCH_ASSOC);
 

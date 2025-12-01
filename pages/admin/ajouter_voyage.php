@@ -5,9 +5,9 @@ include '../../includes/header_admin.php';
 
 $message = '';
 
-$trajets = $pdo->query("SELECT * FROM Trajet ORDER BY ville_depart")->fetchAll();
-$buses = $pdo->query("SELECT * FROM Bus ORDER BY immatriculation")->fetchAll();
-$agences = $pdo->query("SELECT * FROM Agence ORDER BY nom_agence")->fetchAll();
+$trajets = $pdo->query("SELECT * FROM trajet ORDER BY ville_depart")->fetchAll();
+$buses = $pdo->query("SELECT * FROM bus ORDER BY immatriculation")->fetchAll();
+$agences = $pdo->query("SELECT * FROM agence ORDER BY nom_agence")->fetchAll();
 
 if ($_POST) {
     $id_trajet = $_POST['id_trajet'];
@@ -21,22 +21,22 @@ if ($_POST) {
     } else {
         try {
             // Insérer le voyage
-            $stmt = $pdo->prepare("INSERT INTO Voyage (id_trajet, id_bus, id_agence, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO voyage (id_trajet, id_bus, id_agence, date_depart, date_arrivee) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$id_trajet, $id_bus, $id_agence, $date_depart, $date_arrivee]);
             $id_voyage = $pdo->lastInsertId();
 
             // VÉRIFIER SI LES SIÈGES EXISTENT DÉJÀ POUR CE BUS
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM Siege WHERE id_bus = ?");
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM siege WHERE id_bus = ?");
             $stmt->execute([$id_bus]);
             $sieges_existants = $stmt->fetchColumn();
 
             if ($sieges_existants == 0) {
                 // Créer les sièges UNIQUEMENT si le bus est neuf
-                $stmt = $pdo->prepare("SELECT nombre_place FROM Bus WHERE id_bus = ?");
+                $stmt = $pdo->prepare("SELECT nombre_place FROM bus WHERE id_bus = ?");
                 $stmt->execute([$id_bus]);
                 $nombre_place = $stmt->fetchColumn();
 
-                $stmt = $pdo->prepare("INSERT INTO Siege (id_bus, numero_siege, statut) VALUES (?, ?, 'libre')");
+                $stmt = $pdo->prepare("INSERT INTO siege (id_bus, numero_siege, statut) VALUES (?, ?, 'libre')");
                 for ($i = 1; $i <= $nombre_place; $i++) {
                     $stmt->execute([$id_bus, $i]);
                 }

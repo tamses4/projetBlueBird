@@ -38,12 +38,12 @@ $stmt = $pdo->prepare("
         v.date_depart,
         COALESCE(s.numero_siege, 'Non assigné') AS numero_siege,
         COALESCE(p.statut, 'en_attente') AS statut_paiement
-    FROM Reservation r
-    JOIN Voyage v ON r.id_voyage = v.id_voyage
-    JOIN Trajet t ON v.id_trajet = t.id_trajet
-    LEFT JOIN Billet b ON r.id_reservation = b.id_reservation
-    LEFT JOIN Siege s ON b.id_siege = s.id_siege
-    LEFT JOIN Paiement p ON r.id_reservation = p.id_reservation
+    FROM reservation r
+    JOIN voyage v ON r.id_voyage = v.id_voyage
+    JOIN trajet t ON v.id_trajet = t.id_trajet
+    LEFT JOIN billet b ON r.id_reservation = b.id_reservation
+    LEFT JOIN siege s ON b.id_siege = s.id_siege
+    LEFT JOIN paiement p ON r.id_reservation = p.id_reservation
     WHERE r.id_client = ?
     ORDER BY r.date_reservation DESC
 ");

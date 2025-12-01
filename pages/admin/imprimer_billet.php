@@ -18,14 +18,14 @@ $stmt = $pdo->prepare("
         s.numero_siege,
         bi.montant,
         p.statut as statut_paiement
-    FROM Reservation r
-    JOIN Client c ON r.id_client = c.id_client
-    JOIN Voyage v ON r.id_voyage = v.id_voyage
-    JOIN Trajet t ON v.id_trajet = t.id_trajet
-    JOIN Billet bi ON r.id_reservation = bi.id_reservation
-    JOIN Paiement p ON r.id_reservation = p.id_reservation
-    JOIN Siege s ON bi.id_siege = s.id_siege
-    JOIN Bus b ON s.id_bus = b.id_bus
+    FROM reservation r
+    JOIN client c ON r.id_client = c.id_client
+    JOIN voyage v ON r.id_voyage = v.id_voyage
+    JOIN trajet t ON v.id_trajet = t.id_trajet
+    JOIN billet bi ON r.id_reservation = bi.id_reservation
+    JOIN paiement p ON r.id_reservation = p.id_reservation
+    JOIN siege s ON bi.id_siege = s.id_siege
+    JOIN bus b ON s.id_bus = b.id_bus
     WHERE r.id_reservation = ? 
       AND r.statut_reservation = 'confirmée'
       AND p.statut = 'paye'

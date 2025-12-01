@@ -14,7 +14,7 @@ if ($_POST) {
         $message = "<div style='color:red;'>Prix invalide.</div>";
     } else {
         try {
-            $stmt = $pdo->prepare("INSERT INTO Trajet (ville_depart, ville_arrivee, prix_base) VALUES (?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO trajet (ville_depart, ville_arrivee, prix_base) VALUES (?, ?, ?)");
             $stmt->execute([$ville_depart, $ville_arrivee, $prix_base]);
             $message = "<div style='color:green;'>Trajet ajouté avec succès !</div>";
         } catch (Exception $e) {

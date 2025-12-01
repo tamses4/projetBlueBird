@@ -16,7 +16,7 @@ if ($_POST) {
         $message = "<div style='color:red;'>Nom et ville obligatoires.</div>";
     } else {
         try {
-            $stmt = $pdo->prepare("INSERT INTO Agence (nom_agence, adresse_agence, tel_agence, email_agence, ville) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO agence (nom_agence, adresse_agence, tel_agence, email_agence, ville) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$nom, $adresse, $tel, $email, $ville]);
             $message = "<div style='color:green;'>Agence ajoutée avec succès !</div>";
         } catch (Exception $e) {

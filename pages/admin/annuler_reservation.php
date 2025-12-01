@@ -7,7 +7,7 @@ if (!$id || !is_numeric($id)) {
 }
 
 // Vérifier que la réservation existe
-$stmt = $pdo->prepare("SELECT id_voyage FROM Reservation WHERE id_reservation = ?");
+$stmt = $pdo->prepare("SELECT id_voyage FROM reservation WHERE id_reservation = ?");
 $stmt->execute([$id]);
 $reservation = $stmt->fetch();
 
@@ -16,13 +16,13 @@ if (!$reservation) {
 }
 
 // Annuler
-$pdo->prepare("UPDATE Reservation SET statut_reservation = 'annulée' WHERE id_reservation = ?")
+$pdo->prepare("UPDATE reservation SET statut_reservation = 'annulée' WHERE id_reservation = ?")
     ->execute([$id]);
 
 // Libérer le siège
 $pdo->prepare("
-    UPDATE Siege s
-    JOIN Billet bi ON s.id_siege = bi.id_siege
+    UPDATE siege s
+    JOIN billet bi ON s.id_siege = bi.id_siege
     SET s.statut = 'libre'
     WHERE bi.id_reservation = ?
 ")->execute([$id]);

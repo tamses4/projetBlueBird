@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erreur = "Veuillez remplir tous les champs.";
     } else {
         try {
-            $stmt = $pdo->prepare("SELECT id_client, nom_client, mot_de_passe FROM Client WHERE email = ?");
+            $stmt = $pdo->prepare("SELECT id_client, nom_client, mot_de_passe FROM client WHERE email = ?");
             $stmt->execute([$email]);
             $client = $stmt->fetch(PDO::FETCH_ASSOC);
 

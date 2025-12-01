@@ -1,57 +1,34 @@
 <?php
-// Fichier: app/core/Database.php
-namespace App\Core;
 
-use PDO;
-use PDOException;
+// ==============================
+//  CONFIGURATION AUTO (ENV → LOCAL)
+// ==============================
 
-class Database {
-    // On ne met plus les valeurs en dur ici, on les définira dans la méthode getConnection
-    private $host;
-    private $db_name;
-    private $username;
-    private $password;
-    private $port; // IMPORTANT : Ajout de la variable port
-    public $conn;
+// Render / Aiven (production)
+$host = getenv('DB_HOST') ?: 'localhost';
+$db   = getenv('DB_NAME') ?: 'gestion_bus';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : 'Callita4';
+$port = getenv('DB_PORT') ?: 3306;
 
-    // Méthode pour obtenir la connexion
-    public function getConnection() {
-        $this->conn = null;
+// ==============================
+//  CONNEXION PDO
+// ==============================
 
-        // --- C'est ici que la magie opère ---
-        // On demande à PHP : "Est-ce qu'il y a une variable d'environnement DB_HOST ?"
-        // Si OUI (sur Render), on l'utilise.
-        // Si NON (sur votre PC), on utilise "localhost".
-        
-        $this->host     = getenv('DB_HOST') ?: "localhost";
-        $this->db_name  = getenv('DB_NAME') ?: "gestion_bus";
-        $this->username = getenv('DB_USER') ?: "root";
-        $this->password = getenv('DB_PASS') !== false ? getenv('DB_PASS') : "Callita4";
-        $this->port     = getenv('DB_PORT') ?: 3306; // Par défaut 3306 sur WAMP, mais change sur Aiven
+try {
+    // Le DSN DOIT contenir le port pour AIVEN
+    $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
 
-        try {
-            // Construction de la chaîne de connexion (DSN) avec le PORT inclus
-            // "mysql:host=...;port=...;dbname=..."
-            $dsn = "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name . ";charset=utf8";
+    $pdo = new PDO($dsn, $user, $pass);
 
-            $this->conn = new PDO(
-                $dsn, 
-                $this->username, 
-                $this->password
-            );
-            
-            // Configuration des options PDO
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            // Note : "set names utf8" est déjà géré par ";charset=utf8" dans le DSN, 
-            // mais on peut le garder pour être sûr.
-            $this->conn->exec("set names utf8");
-            
-        } catch(PDOException $exception) {
-            echo "Erreur de connexion : " . $exception->getMessage();
-        }
+    // Options PDO
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        return $this->conn;
-    }
+    // Force UTF-8 (sécurité)
+    $pdo->exec("SET NAMES utf8");
+
+} catch (PDOException $e) {
+    die("Erreur de connexion : " . $e->getMessage());
 }
+
 ?>

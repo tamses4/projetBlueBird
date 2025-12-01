@@ -8,7 +8,7 @@ function updateVoyageStatus($pdo, $id_voyage) {
             COALESCE(COUNT(bi.id_billet), 0) as billets_vendus
         FROM voyage v
         JOIN bus b ON v.id_bus = b.id_bus
-        LEFT JOIN Billet bi ON bi.id_reservation IN (
+        LEFT JOIN billet bi ON bi.id_reservation IN (
             SELECT id_reservation 
             FROM Reservation 
             WHERE id_voyage = v.id_voyage 

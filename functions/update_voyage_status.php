@@ -36,7 +36,7 @@ function updateVoyageStatus($pdo, $id_voyage) {
         $nouveau_statut = 'Terminé';
     }
 
-    $pdo->prepare("UPDATE Voyage SET statut_voyage = ? WHERE id_voyage = ?")
+    $pdo->prepare("UPDATE voyage SET statut_voyage = ? WHERE id_voyage = ?")
         ->execute([$nouveau_statut, $id_voyage]);
 }
 ?>

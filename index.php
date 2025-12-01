@@ -7,20 +7,20 @@ include 'functions/update_voyage_status.php';
 
 
 // === METTRE À JOUR TOUS LES STATUTS ===
-$stmt = $pdo->query("SELECT id_voyage FROM Voyage");
+$stmt = $pdo->query("SELECT id_voyage FROM voyage");
 $ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
 foreach ($ids as $id) {
-    updateVoyageStatus($pdo, $id);
+    updatevoyageStatus($pdo, $id);
 }
 
 
-// === VOYAGES À AFFICHER (DISPONIBLES SEULEMENT) ===
-// === VOYAGES À AFFICHER (DISPONIBLES + FUTURS) ===
+// === voyageS À AFFICHER (DISPONIBLES SEULEMENT) ===
+// === voyageS À AFFICHER (DISPONIBLES + FUTURS) ===
 $stmt = $pdo->query("
     SELECT v.*, t.ville_depart, t.ville_arrivee, t.prix_base, 
            b.immatriculation, b.nombre_place, a.nom_agence,
            (b.nombre_place - COALESCE(reservees.reservees, 0)) as places_libres
-    FROM Voyage v
+    FROM voyage v
     JOIN Trajet t ON v.id_trajet = t.id_trajet
     JOIN Bus b ON v.id_bus = b.id_bus
     JOIN Agence a ON v.id_agence = a.id_agence
@@ -51,10 +51,10 @@ $voyages = $stmt->fetchAll();
     </div>
 </section>
 
-<!-- VOYAGES -->
+<!-- voyageS -->
 <section class="voyages-section">
     <div class="container">
-        <h2 class="section-title">Voyages Disponibles</h2>
+        <h2 class="section-title">voyages Disponibles</h2>
         <?php if (empty($voyages)): ?>
             <div class="empty-state">
                 <p>Aucun voyage disponible pour le moment.</p>

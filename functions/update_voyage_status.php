@@ -10,7 +10,7 @@ function updateVoyageStatus($pdo, $id_voyage) {
         JOIN bus b ON v.id_bus = b.id_bus
         LEFT JOIN billet bi ON bi.id_reservation IN (
             SELECT id_reservation 
-            FROM Reservation 
+            FROM reservation 
             WHERE id_voyage = v.id_voyage 
             AND statut_reservation != 'annulée'
         )

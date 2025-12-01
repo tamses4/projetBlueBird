@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Si le fichier demandé n'est pas un vrai fichier (ex: image.jpg)
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Et si ce n'est pas un vrai dossier
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Alors, on redirige tout vers index.php
+RewriteRule ^ index.php [QSA,L]

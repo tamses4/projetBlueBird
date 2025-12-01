@@ -14,7 +14,7 @@ function envoyerEmailConfirmation($to, $nom_client, $lien_confirmation) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'ondoatamar@gmail.com';           // ← TON EMAIL
-        $mail->Password   = 'fxvncleurevgubdj';           // ← MOT DE PASSE D'APPLICATION (voir ci-dessous)
+        $mail->Password   = 'fxvn cleu revg ubdj';           // ← MOT DE PASSE D'APPLICATION (voir ci-dessous)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->CharSet    = 'UTF-8';

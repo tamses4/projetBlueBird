@@ -65,7 +65,7 @@ $sieges = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Récupérer les infos du client connecté (si connecté)
 $client_info = null;
 if ($client_connecte) {
-    $stmt = $pdo->prepare("SELECT nom_client, telephone, email FROM Client WHERE id_client = ?");
+    $stmt = $pdo->prepare("SELECT nom_client, telephone, email FROM client WHERE id_client = ?");
     $stmt->execute([$client_id]);
     $client_info = $stmt->fetch(PDO::FETCH_ASSOC);
 }

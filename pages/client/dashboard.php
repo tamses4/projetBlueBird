@@ -22,7 +22,7 @@ if (!$client) {
 }
 
 // Mettre à jour tous les statuts de voyage
-foreach ($pdo->query("SELECT id_voyage FROM Voyage")->fetchAll(PDO::FETCH_COLUMN) as $id) {
+foreach ($pdo->query("SELECT id_voyage FROM voyage")->fetchAll(PDO::FETCH_COLUMN) as $id) {
     updateVoyageStatus($pdo, $id);
 }
 

@@ -7,8 +7,8 @@ include '../../includes/header_admin.php';
 include '../../functions/update_voyage_status.php';
 
 
-$pdo->query("SELECT id_voyage FROM Voyage")->fetchAll();
-foreach ($pdo->query("SELECT id_voyage FROM Voyage") as $row) {
+$pdo->query("SELECT id_voyage FROM voyage")->fetchAll();
+foreach ($pdo->query("SELECT id_voyage FROM voyage") as $row) {
     updateVoyageStatus($pdo, $row['id_voyage']);
 }
 

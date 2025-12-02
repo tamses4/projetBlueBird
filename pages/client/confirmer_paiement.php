@@ -16,13 +16,13 @@ $stmt = $pdo->prepare("
         t.ville_depart, t.ville_arrivee, t.prix_base,
         v.date_depart,
         s.numero_siege
-    FROM Paiement p
+    FROM paiement p
     JOIN reservation r ON p.id_reservation = r.id_reservation
-    JOIN Client c ON r.id_client = c.id_client
-    JOIN Voyage v ON r.id_voyage = v.id_voyage
-    JOIN Trajet t ON v.id_trajet = t.id_trajet
-    JOIN Billet b ON r.id_reservation = b.id_reservation
-    JOIN Siege s ON b.id_siege = s.id_siege
+    JOIN client c ON r.id_client = c.id_client
+    JOIN voyage v ON r.id_voyage = v.id_voyage
+    JOIN trajet t ON v.id_trajet = t.id_trajet
+    JOIN billet b ON r.id_reservation = b.id_reservation
+    JOIN siege s ON b.id_siege = s.id_siege
     WHERE p.token = ?
       AND p.statut = 'en_attente'
     LIMIT 1

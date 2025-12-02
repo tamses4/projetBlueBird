@@ -4,16 +4,16 @@ include '../../config/db.php';
 include '../../functions/update_voyage_status.php';
 
 // Mettre à jour les statuts
-$stmt = $pdo->query("SELECT id_voyage FROM Voyage");
+$stmt = $pdo->query("SELECT id_voyage FROM voyage");
 foreach ($stmt->fetchAll(PDO::FETCH_COLUMN) as $id) {
     updateVoyageStatus($pdo, $id);
 }
 
 // Récupérer les villes
-$stmt = $pdo->query("SELECT DISTINCT ville_depart FROM Trajet ORDER BY ville_depart");
+$stmt = $pdo->query("SELECT DISTINCT ville_depart FROM trajet ORDER BY ville_depart");
 $villes_depart = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-$stmt = $pdo->query("SELECT DISTINCT ville_arrivee FROM Trajet ORDER BY ville_arrivee");
+$stmt = $pdo->query("SELECT DISTINCT ville_arrivee FROM trajet ORDER BY ville_arrivee");
 $villes_arrivee = $stmt->fetchAll(PDO::FETCH_COLUMN);
 ?>
 

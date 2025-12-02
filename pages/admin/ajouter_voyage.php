@@ -58,7 +58,7 @@ if ($_POST) {
 <?= $message ?>
 
 <div class="form-container">
-    <h2>Ajouter un Voyage</h2>
+   
     <form method="POST">
          <div class="form-group">
         <label>Trajet</label>

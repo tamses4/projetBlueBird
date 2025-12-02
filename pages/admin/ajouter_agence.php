@@ -30,7 +30,7 @@ if ($_POST) {
 <?= $message ?>
 
 <<div class="form-container">
-    <h2>Ajouter un Voyage</h2>
+  
     <form method="POST"> <div class="form-group">
         <label>Nom de l'agence *</label>
         <input type="text" name="nom_agence" class="form-control" required>

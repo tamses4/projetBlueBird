@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     // Vérifier si l'email existe déjà
-    $check = $pdo->prepare("SELECT id_client FROM Client WHERE email = ?");
+    $check = $pdo->prepare("SELECT id_client FROM client WHERE email = ?");
     $check->execute([$email]);
     if ($check->fetch()) {
         $erreur = "Cet email est déjà utilisé.";
